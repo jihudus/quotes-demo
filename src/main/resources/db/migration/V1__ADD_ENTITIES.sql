@@ -1,0 +1,39 @@
+CREATE TABLE vote (
+  id BIGINT auto_increment NOT NULL,
+   evaluation VARCHAR(255) NOT NULL,
+   time TIMESTAMP NOT NULL,
+   owner_id BIGINT NOT NULL,
+   quote_id BIGINT NOT NULL,
+   CONSTRAINT pk_vote PRIMARY KEY (id)
+);
+
+CREATE TABLE quote (
+  id BIGINT auto_increment NOT NULL,
+   created TIMESTAMP NOT NULL,
+   modified TIMESTAMP NOT NULL,
+   member_id BIGINT NOT NULL,
+   content VARCHAR(4096) NOT NULL,
+   CONSTRAINT pk_quote PRIMARY KEY (id)
+);
+
+CREATE TABLE member (
+  id BIGINT auto_increment NOT NULL,
+   time TIMESTAMP NOT NULL,
+   email VARCHAR(255) NOT NULL,
+   password VARCHAR(4096) NOT NULL,
+   name VARCHAR(255) NOT NULL,
+   CONSTRAINT pk_member PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE member_seq minvalue 1 START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE quote_seq minvalue 1 START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE vote_seq minvalue 1 START WITH 1 INCREMENT BY 50;
+
+ALTER TABLE member ADD CONSTRAINT uc_member_email UNIQUE (email);
+
+ALTER TABLE quote ADD CONSTRAINT FK_QUOTE_ON_MEMBER FOREIGN KEY (member_id) REFERENCES member (id);
+
+ALTER TABLE vote ADD CONSTRAINT FK_VOTE_ON_OWNER FOREIGN KEY (owner_id) REFERENCES member (id);
+
+ALTER TABLE vote ADD CONSTRAINT FK_VOTE_ON_QUOTE FOREIGN KEY (quote_id) REFERENCES quote (id);
+
