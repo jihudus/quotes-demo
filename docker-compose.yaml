@@ -1,0 +1,7 @@
+version: "3.3"
+
+services:
+    quotes-demo:
+        image: "jihudus/quotes-demo"
+        ports:
+            - 8085:8085/tcp

@@ -1,3 +1,4 @@
+-- 3 members added with 'password' as password
 INSERT INTO member (email, name, password, time)
     VALUES ('test1@test.com', 'test1',
         '$2a$10$HSSCW4bgjWsx4efaeE9GvOp2ONdeNd89ilecx2OP.mS35QjRHi6nS',
