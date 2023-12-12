@@ -2,11 +2,14 @@ package com.example.quotes.controller;
 
 import com.example.quotes.dto.QuoteDTO;
 import com.example.quotes.service.QuoteService;
+import com.example.quotes.service.VoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,6 +17,8 @@ import java.util.List;
 public class QuoteController {
 
     private final QuoteService quoteService;
+
+    private final VoteService voteService;
 
     @PostMapping
     public QuoteDTO postNewQuote(Authentication auth, @RequestBody String content) {
@@ -63,5 +68,11 @@ public class QuoteController {
     @GetMapping("/{quoteId}")
     public QuoteDTO getQuote(@PathVariable Long quoteId) {
         return quoteService.readQuote(quoteId);
+    }
+
+    /* Map key is a date, list contains likes & dislikes amount as 0th and 1st element */
+    @GetMapping("/history/{quoteId}")
+    public Map<LocalDate, List<Integer>> getQuoteHistory(@PathVariable Long quoteId) {
+        return voteService.readVotesGraph(quoteId);
     }
 }

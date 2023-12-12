@@ -17,10 +17,11 @@ public class RequestMatcherManager implements AuthorizationManager<RequestAuthor
 
     private final UserDetailsService memberService;
 
+    /* Quote id must be in authorities list */
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
-        String contextPath = object.getRequest().getServletPath().replaceFirst("/", "");
-        String[] split = contextPath.split("/");
+        String path = object.getRequest().getServletPath().replaceFirst("/", "");
+        String[] split = path.split("/");
         if (split.length != 2 || !split[0].equals("quotes")) return null;
         String name = object.getRequest().getUserPrincipal().getName();
         boolean grant = memberService.loadUserByUsername(name)

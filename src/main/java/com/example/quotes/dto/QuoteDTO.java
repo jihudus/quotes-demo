@@ -1,10 +1,9 @@
 package com.example.quotes.dto;
 
 import com.example.quotes.entity.Quote;
+import com.example.quotes.entity.Vote;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Builder
@@ -14,7 +13,9 @@ public class QuoteDTO {
 
     private Long member;
 
-    private List<VoteDTO> votes;
+    private Long likes;
+
+    private Long dislikes;
 
     private String content;
 
@@ -23,7 +24,8 @@ public class QuoteDTO {
                 .id(quote.getId())
                 .content(quote.getContent())
                 .member(quote.getMember().getId())
-                .votes(quote.getVotes().stream().map(VoteDTO::fromVote).toList())
+                .likes(quote.getVotes().stream().filter(v -> v.getEvaluation().equals(Vote.Evaluation.POSITIVE)).count())
+                .dislikes(quote.getVotes().stream().filter(v -> v.getEvaluation().equals(Vote.Evaluation.NEGATIVE)).count())
                 .build();
     }
 }

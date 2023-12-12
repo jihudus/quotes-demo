@@ -85,6 +85,7 @@ public class QuoteServiceImpl implements QuoteService {
                 .toList();
     }
 
+    @Transactional
     @Override
     public QuoteDTO readQuote(Long quoteId) {
         return QuoteDTO.fromQuote(quoteRepository.getReferenceById(quoteId));
