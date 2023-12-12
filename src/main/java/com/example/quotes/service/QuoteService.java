@@ -20,4 +20,6 @@ public interface QuoteService {
     List<QuoteDTO> readBest10();
 
     List<QuoteDTO> readWorst10();
+
+    QuoteDTO readQuote(Long quoteId);
 }

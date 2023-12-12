@@ -59,4 +59,9 @@ public class QuoteController {
     public List<QuoteDTO> getWorst10() {
         return quoteService.readWorst10();
     }
+
+    @GetMapping("/{quoteId}")
+    public QuoteDTO getQuote(@PathVariable Long quoteId) {
+        return quoteService.readQuote(quoteId);
+    }
 }

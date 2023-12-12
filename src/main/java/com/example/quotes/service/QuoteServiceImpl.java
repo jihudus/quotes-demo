@@ -84,4 +84,9 @@ public class QuoteServiceImpl implements QuoteService {
                 .map(QuoteDTO::fromQuote)
                 .toList();
     }
+
+    @Override
+    public QuoteDTO readQuote(Long quoteId) {
+        return QuoteDTO.fromQuote(quoteRepository.getReferenceById(quoteId));
+    }
 }
